@@ -15,9 +15,13 @@ import "./tasks/scripts";
 dotenvConfig({ path: resolve(__dirname, "./.env") });
 
 // Ensure that we have all the environment variables we need.
-const privateKey = process.env.PRIVATE_KEY;
-if (!privateKey) {
-  throw new Error("Please set your PRIVATE_KEY in a .env file");
+const privateKey1 = process.env.PRIVATE_KEY_1;
+if (!privateKey1) {
+  throw new Error("Please set your PRIVATE_KEY_1 in a .env file");
+}
+const privateKey2 = process.env.PRIVATE_KEY_2;
+if (!privateKey2) {
+  throw new Error("Please set your PRIVATE_KEY_2 in a .env file");
 }
 
 const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
@@ -39,8 +43,11 @@ const chainIds = {
 };
 
 function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
-  if (!privateKey) {
-    throw new Error("Please set your PRIVATE_KEY in a .env file");
+  if (!privateKey1) {
+    throw new Error("Please set your PRIVATE_KEY_1 in a .env file");
+  }
+  if (!privateKey2) {
+    throw new Error("Please set your PRIVATE_KEY_1 in a .env file");
   }
 
   let jsonRpcUrl: string;
@@ -55,7 +62,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + infuraApiKey;
   }
   return {
-    accounts: [privateKey],
+    accounts: [privateKey1, privateKey2],
     chainId: chainIds[chain],
     url: jsonRpcUrl,
   };
@@ -88,8 +95,12 @@ const config: HardhatUserConfig = {
     hardhat: {
       accounts: [
         {
-          privateKey,
-          balance: "100",
+          privateKey: privateKey1,
+          balance: "10000000000000000000000000000",
+        },
+        {
+          privateKey: privateKey2,
+          balance: "10000000000000000000000000000",
         },
       ],
       chainId: chainIds.hardhat,

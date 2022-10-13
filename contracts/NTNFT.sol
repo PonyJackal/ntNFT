@@ -10,6 +10,12 @@ contract NTNFT is ERC721A, Ownable, ReentrancyGuard {
     // administrators
     mapping(address => bool) public admins;
 
+    // -----------------------------------------
+    // NTNFT Events
+    // -----------------------------------------
+    event TokenMinted(address indexed to, uint256 quantity);
+    event AdminAdded(address indexed admin, bool isAdmin);
+
     constructor() ERC721A("NTNFT", "NTNFT") {}
 
     /**
@@ -20,6 +26,8 @@ contract NTNFT is ERC721A, Ownable, ReentrancyGuard {
         require(_quantity > 0, "NTNFT: quantity must be greater than 0");
 
         _mint(msg.sender, _quantity);
+
+        emit TokenMinted(msg.sender, _quantity);
     }
 
     /**
@@ -58,5 +66,7 @@ contract NTNFT is ERC721A, Ownable, ReentrancyGuard {
      */
     function addAdmin(address _admin, bool _isAdmin) external onlyOwner {
         admins[_admin] = _isAdmin;
+
+        emit AdminAdded(_admin, _isAdmin);
     }
 }

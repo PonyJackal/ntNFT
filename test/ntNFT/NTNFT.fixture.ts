@@ -1,17 +1,16 @@
-// import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
-// import { ethers } from "hardhat";
+import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
+import { ethers } from "hardhat";
 
-// import type { Greeter } from "../../src/types/contracts/Greeter";
-// import type { Greeter__factory } from "../../src/types/factories/contracts/Greeter__factory";
+import type { NTNFT } from "../../src/types/contracts/NTNFT";
+import type { NTNFT__factory } from "../../src/types/factories/contracts/NTNFT__factory";
 
-// export async function deployGreeterFixture(): Promise<{ greeter: Greeter }> {
-//   const signers: SignerWithAddress[] = await ethers.getSigners();
-//   const admin: SignerWithAddress = signers[0];
+export async function deployNTNFTFixture(): Promise<{ ntNFT: NTNFT }> {
+  const signers: SignerWithAddress[] = await ethers.getSigners();
+  const admin: SignerWithAddress = signers[0];
 
-//   const greeting: string = "Hello, world!";
-//   const greeterFactory: Greeter__factory = <Greeter__factory>await ethers.getContractFactory("Greeter");
-//   const greeter: Greeter = <Greeter>await greeterFactory.connect(admin).deploy(greeting);
-//   await greeter.deployed();
+  const ntNFTFactory: NTNFT__factory = <NTNFT__factory>await ethers.getContractFactory("NTNFT");
+  const ntNFT: NTNFT = <NTNFT>await ntNFTFactory.connect(admin).deploy();
+  await ntNFT.deployed();
 
-//   return { greeter };
-// }
+  return { ntNFT };
+}
