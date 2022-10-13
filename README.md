@@ -52,7 +52,7 @@ This template comes with sensible default configurations in the following files:
 This template comes with GitHub Actions pre-configured. Your contracts will be linted and tested on every push and pull
 request made to the `main` branch.
 
-Note though that to make this work, you must se your `INFURA_API_KEY` and your `MNEMONIC` as GitHub secrets.
+Note though that to make this work, you must se your `INFURA_API_KEY` and your `PRIVATE_KEY_1`, `PRIVATE_KEY_2` as GitHub secrets.
 
 You can edit the CI script in [.github/workflows/ci.yml](./.github/workflows/ci.yml).
 
@@ -97,7 +97,7 @@ $ yarn typechain
 
 ### Test
 
-Run the tests with Hardhat:
+You need to set `TESTING` in `.env` as `true` in order to deploy contracts.
 
 ```sh
 $ yarn test
@@ -145,10 +145,18 @@ $ yarn clean
 
 ### Deploy
 
-Deploy the contracts to Hardhat Network:
+You need to set `TESTING` in `.env` as `false` in order to deploy contracts.
+
+Also you can set `DEPLOY_NETWORK` as you want.
+
+I wrote some hardhat tasks for deploy and verify.
 
 ```sh
-$ yarn deploy --greeting "Bonjour, le monde!"
+// deploy NTNFT contract
+$ npx hardhat deploy:NTNFT
+
+// verify NTNFT contract
+$ npx hardhat verify:NTNFT
 ```
 
 ## Tips
